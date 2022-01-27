@@ -1,0 +1,83 @@
+<style>
+	body {
+		width: 100%;
+		height: auto;
+	}
+	section.main {
+		margin: 5rem;
+	}
+	h1,p,ol,ul,li,a {
+		font-family: sans-serif;
+	}
+	code {
+		background-color: black;
+		color:white;
+	}
+	pre {
+		background-color: black;
+		color:white;
+	    white-space: pre-wrap;       /* Since CSS 2.1 */
+	    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	    white-space: -pre-wrap;      /* Opera 4-6 */
+	    white-space: -o-pre-wrap;    /* Opera 7 */
+	    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	}
+</style>
+<body>
+	<section class="main">
+		<h1>Git Merge Basics</h1>
+		<p>One of the most commonly used and most powerful features of version control systems such as git is the ability to create multiple branches (or variations) of a single repository. You can have multiple branches in your local repository as well as on your remote. You can also push changes from a local branch to a new remote branch of the same name in order to keep them synced. Some use cases for this funcionality are:
+			<ul>
+				<li>Working with multiple people on the same project. This helps to ensure everyone is working with the most recent version of the project.</li>
+				<li>Adding new and experimental features or design changes to a site. Related changes can be stored in their own branch for review and testing.</li>
+				<li>Creating emergency fixes for new bugs. It is easier to test patches for broken code in an independant environment so your trial and error doesn't have to be seen on the live site.</li>
+			</ul>
+		</p>
+		<p>If you were to be working as a designer for a web redesign project, the developer on the project will likely create a dedicated branch or environment for this work to take place. This way, all stakeholders can review the new edits without having to make any changes to the live version of the site.</p>
+		<p>In order to get a better understanding of how the <code>git merge</code> feature is used, please complete the following exercise</p>
+		<ol>
+			<li>In the command line, navigate to the root folder of your local repository. Run <code>git pull</code> to ensure your files are up to date with those on github.</li>
+			<li>Run the command <code>git checkout -b merge-test</code>. The checkout function is used to switch between local branches. Adding the -b modifier creates a new branch named after the string that follows the modifier, in this case 'merge-test'.</li>
+			<li>Run the command <code>git branch</code>. This lists all of your local branches. You should now see your main branch as well as the new branch, 'merge-test'.</li>
+			<li>Now that you are on your new branch, open the project in your text editor. In your README.md file, add the following text:
+				<ul>
+					<li>
+						<pre>## Changes to one file in two branches
+
+		When merging two branches with git, git attempts to reconcile the differences in the files on its own. When it is unable to do so, it flags the significant differences between changed files as conflicts. It is up to you or the person managing the repo to manually correct these conflicts before the merge can be completed.
+						</pre>
+					</li>
+				</ul>
+			</li>
+			<li>Save these changes and run the <code>git status</code> command. You should now see that there are unstaged changes to the README.md file.</li>
+			<li>Run the <code>git add README.md</code> command followed by <code>git commit -m "New branch edits to README.md"</code>.</li>
+		</ol>
+		<p>To summarize, we have now created a new branch, made a change to README.md in that branch, and committed those changes. We will now switch back to our original branch and make some additional changes before attempting to merge the two.</p>
+		<ol>
+			<li>In the command line, run the command <code>git branch</code>. Whatever the name of your first branch is (likely master or main), navigate back to that branch with <code>git checkout {BRANCH NAME HERE}</code> where you have replaced {BRANCH NAME HERE} with the correct name of your original branch.</li>
+			<li>Go back to your code editor and check the README.md file. You will see that now that you ahve changed which branch you are on, the content of the file has updated to reflect that branch.</li>
+			<li>In your README.md file, add the following text:
+				<ul>
+					<li>
+						<pre>If one file has been changed in more than one branch, attempting to merge those branches will cause a conflict in that file. This is because the branches have diverged from one another. Had the file only had changes in the new branch, git whould see these changes as a continuation of master. It then would have been able to "Fast-forward" and would not have created a conflict.
+						</pre>
+					</li>
+				</ul>
+			</li>
+			<li>Save these changes and run the <code>git status</code> command. You should again see that there are unstaged changes to the README.md file.</li>
+			<li>Run the <code>git add README.md</code> command followed by <code>git commit -m "Edits to README.md on original branch"</code>.</li>
+		</ol>
+		<p>Now that we have made changes to the same file in both branches, lets try to merge these changes together.</p>
+		<ol>
+			<li>Run the command <code>git branch</code> to ensure that you are on your original branch. If you are not, use the command <code>git checkout {BRANCH NAME HERE}</code> to get onto the correct branch.</li>
+			<li>Now, run the command <code>git merge merge-test</code>. This is telling git to take the changes from the branch merge-test and to apply them to the current branch, in this case your original branch.</li>
+			<li>You should now get a warning along the lines of <code>CONFLICT (content): Merge conflict in README.md</code>. This is telling you that there is a conflict in the README.md file between the two branches that will need to be resolved manually before completing the merge.</li>
+			<li>Open up the README.md file in your text editor. You will now see that the file has some additional changes automatically made by git. When git encounters a conflict during a merge, it will edit the content of the affected files with visual indicators that mark both sides of the conflicted content. These visual markers are: <<<<<<<, =======, and >>>>>>>. Its helpful to search a project for these indicators during a merge to find where conflicts need to be resolved.</li>
+			<li>In our example, we would like to keep both paragraphs that were added to the README.md file. In order to keep both, we will simply remove the visual markers added by git as well as any other content we are trying to eliminate. Saving the file will indicate to git that the conflict has been resolved.</li>
+			<li>Now if you run the command <code>git status</code>, you should see somehwere in the response notes about having unmerged paths and a list of those paths. Running the command <code>git add README.md</code> to mark the path for resolution.</li>
+			<li>You can now run the command <code>git commit -m "manually resolving merge conflicts"</code> to complete the merge.</li>
+			<li>If all other steps have been completed successfully, use the command <code>git push</code> to push these changes to your remote repository.</li>
+		</ol>
+		<p>While this was a very basic example of resolving a merge conflict, your situation might not always be as straight forward. For more information on git merge, please check <a href="https://www.atlassian.com/git/tutorials/using-branches/git-merge" target="_blank">this resource from Atlassian</a>. They have put together one fo the best git usage guides out there. You may also want to try to use a GUI tool based on how complicated your conflicts are. My favorite tool for this is <a href="https://www.sublimemerge.com/" target="_blank">Sublime Merge</a>. It is a very straight forward tool that breaks out all conflicts by file and by branch to make resolution marking much more simple.</p>
+	</section>
+</body>
