@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- body -->
-<body>
+<body id="body">
   <!-- header -->
 	<header class="header">
     <!-- logo -->
@@ -35,10 +35,26 @@
     </div>
   </header>
 
+
+<button class="toggle-button">click me</button>
+<script>
+const btn = document.getElementById('body');
+
+btn.addEventListener('click', function onClick(event) {
+  const backgroundColor = body.style.backgroundColor;
+
+  if (backgroundColor === 'white') {
+    body.style.backgroundColor = 'greenyellow';
+
+  } else {
+    btn.style.backgroundColor = 'white';
+  }
+});
+</script>
   <!-- hero -->
   <section class="hero">
     <div class="hero__content">
-      <h2 class="hero__text">If you don't watch Studio Ghibli you're uncultured.</h2>
+      <h2 id="output" class="hero__text">If you don't watch Studio Ghibli you're uncultured.</h2>
       <img src="imgs/totoroyell.jpeg" class="hero__img" alt="totoro yelling" >
     </div>
   </section>
@@ -121,13 +137,47 @@
 
       <!-- article2 -->
       <article class="article2">
-        <iframe class="article2__video" width="560" height="315" src="https://www.youtube.com/embed/KQiK5eN1Acs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen alt="ducks in the bath"></iframe>
+        <div class="video-thumb">
+          <img src="imgs/ducks.png" class="article1__img" alt="mouse and tiny bird looking into lake">
+        </div>
         <div class="article2__content">
           <h3 class="article2__title">Spirited Away</h3>
           <p class="article2__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </div>
       </article>
+
+      <div class="video-overlay">
+        <div class="close">
+          <img src="https://qfi.staging.qfi.mindgrb.io/wp-content/themes/qfi/dist/images/landing/video-close.svg" alt="close video">
+        </div>
+        <div class="contain-wrapper">
+          <div class="embed-container">
+            <iframe class="video" src="https://www.youtube.com/embed/KQiK5eN1Acs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- js -->
+      <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const openBtn = document.querySelector('.video-thumb');
+        const closeBtn = document.querySelector('.close');
+        const overlay = document.querySelector('.video-overlay');
+
+        openBtn.addEventListener('click',() => {
+          overlay.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click',() => {
+          overlay.style.display = 'none';
+        });
+      });
+
+
+      </script>
+
+
 
       <!-- footer -->
     	<footer class="footer">
